@@ -46,7 +46,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
     try {
       setError('');
       const linkId = customAlias.trim() ? customAlias : uuidv4().slice(0, 5);
-      const newShortenedLink = `your-project-name.vercel.app/#${linkId}`;
+      const newShortenedLink = `https://scissor-kappa.vercel.app/#${linkId}`;
 
       if (currentUser) {
         const newLinkRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkId}`);
@@ -195,7 +195,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      style={{ width: "100%"}}
+      style={{ width: "60%"}}
       closeButton={false}
       />
 
@@ -218,9 +218,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
               value={domain}
               onChange={(e) => setDomain(e.target.value)}
             >
-              <option value="scissor.com">scissor.com</option>
-              <option value="mock.com">mock.xzy</option>
-              <option value="domain.com">domain.abc</option>
+              <option value="https://scissor-kappa.vercel.app">scissor-kappa.vercel.app</option>
             </select>
             </div>
             <div className="custom-label">

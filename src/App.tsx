@@ -1,6 +1,6 @@
 //App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
@@ -9,31 +9,38 @@ import Pricing from './components/Pricing/Pricing';
 import FAQs from './components/FAQs/FAQs';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import { AuthProvider,useAuth } from './AuthContext';
+import { useAuth } from './AuthContext';
 import { useEffect } from 'react';
-import { ref, onValue } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 import { firebaseDatabase } from './utils/firebase-config';
+
 
 
 function App() {
   const { currentUser } = useAuth(); 
+  const navigate = useNavigate();
+  const location = useLocation(); 
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash && currentUser) { 
-      const statsRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${hash}`);
-      onValue(statsRef, (snapshot) => {
+    const redirectIfNeeded = async () => {
+      const hash = location.hash.replace('#', '');
+      if (hash && currentUser) {
+        const statsRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${hash}`);
+        const snapshot = await get(statsRef); 
         const data = snapshot.val();
-        if (data && data.originalLink) {
+        if (data && /^(ftp|http|https):\/\/[^ "]+$/.test(data.originalLink)) {
           window.location.href = data.originalLink;
+        } else {
+          navigate('/'); 
         }
-      });
-    }
-  }, [currentUser]);
+      }
+    };
+
+    redirectIfNeeded();
+  }, [currentUser, location.hash, navigate]);
 
   return (
-    <AuthProvider>
-    <Router>
+    <>
       <Header /> 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -44,8 +51,7 @@ function App() {
         <Route path="/faqs" element={<FAQs />} />
       </Routes>
       <Footer />
-    </Router>
-    </AuthProvider>
+    </>
   );
 }
 

@@ -27,8 +27,8 @@ const Header = () => {
     <div className="container">
       <header className="header">
         <div className="header-logo">
-          <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} >
-            <img src="/assets/logo.svg" alt="Logo" />
+          <NavLink to="/" >
+            <img src="/assets/Logo.svg" alt="Logo" />
           </NavLink>
         </div>
         <nav className={`header-nav ${isMenuOpen ? 'is-active' : ''}`}>
@@ -51,7 +51,7 @@ const Header = () => {
 
               <NavLink to="/login" 
               className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={toggleMenu}>Login</NavLink>
-              
+
               <NavLink to="/signup" className="nav-link-button" onClick={toggleMenu}>Free sign up</NavLink>
             </>
           )}

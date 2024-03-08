@@ -219,7 +219,7 @@ const handleDeleteConfirmation = (link: LinkType) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ width: "100%" }}
+        style={{ width: "60%" }}
         closeButton={false}
       />
   
