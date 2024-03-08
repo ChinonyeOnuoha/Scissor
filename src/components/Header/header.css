@@ -1,0 +1,156 @@
+/* header styles */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Mulish', sans-serif;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0; 
+  color: #FFF;
+}
+
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.nav-link {
+  color: var(--color-white);
+  font-family: 'Mulish', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.nav-link.active {
+  color: #65FDBD; 
+  font-weight: bolder;
+}
+
+
+.nav-link-button {
+  background: var(--color-primary);
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-black); 
+  border-radius: 100px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.nav-link-button:hover {
+  background-color: #5ae9a7; 
+}
+
+.header-menu-button,
+.close-btn img {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+}
+
+.header-menu-button,
+.close-btn{
+  background: transparent;
+  border: none;
+  color: #FFF;
+  display: none;
+  font-size: 24px;
+}
+
+
+/* Mobile and Modal Styles */
+@media (max-width: 768px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0; 
+    align-items: center;
+    width: 100%;
+  }
+
+  .header-nav {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 80%; 
+    height: 100%;
+    background: linear-gradient(55deg,#2472FC 0%, #8711C1 100%);
+    flex-direction: column;
+    align-items: flex-start; 
+    padding: 20px; 
+    gap: 32px; 
+    transform: translateX(100%); 
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .header-nav.is-active {
+    transform: translateX(0); 
+  }
+
+  .header-nav.is-active .close-btn {
+    position: absolute; 
+    top: 16px; 
+    right: 16px;
+    z-index: 16; 
+  }
+
+  .header-menu-button, .close-btn{
+    display: block; 
+    margin: 0;
+  }
+
+  .header-logo img{
+    display: flex;
+    justify-content: flex-start;
+
+  }
+
+  .header-menu-button {
+    justify-content: flex-end; 
+  }
+
+  .header-menu-button img,
+  .close-btn img {
+    width: 32px;
+    height: 32px;
+  }
+
+  
+  .nav-link, .nav-link-button {
+    display: block; 
+    width: 100%; 
+    font-size: 24px;
+    
+  }
+
+  .nav-link-button {
+    text-align: left; 
+  }
+
+  .nav-link-button {
+    padding: 12px 24px;
+    background: #65FDBD;
+    border-radius: 100px;
+    text-align: center;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    font-size: 16px;
+  }
+}
+

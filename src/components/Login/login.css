@@ -1,0 +1,275 @@
+/* login.css */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3em;
+    padding-bottom:3em ;
+    width: 100%;
+    max-width: 600px;
+
+  }
+  
+  .login-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFF;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    
+  }
+  
+  .login-card h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--Neutral-N1000, #000);
+    font-family: "Roboto Slab";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+  }
+  
+  .login-card form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 26.5rem;
+  }
+  
+  .login-card label {
+    color: #000;
+    font-family: Mulish;
+    font-size: 1.1em;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  
+  .login-card input {
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 50px;
+    border: 1px solid #222;
+  
+  }
+  
+  .password-container {
+    position: relative;
+  }
+  
+  
+  .forgot-password-link {
+    color: #0066ee;
+    text-align: right;
+    cursor: pointer;
+    font-family: Mulish;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 1rem;
+
+  }
+  
+  .login-button {
+    padding: 1.2rem;
+    border: none;
+    border-radius: 0.25rem;
+    color: #000;
+    font-family: Mulish;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 50px;
+    background: #65FDBD;
+  }
+
+  .login-button:hover {
+    background-color: #5cecb0;
+  }
+
+  .login-divider{
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin-top: 1em;
+  }
+  
+  .login-divider-p{
+    color: #222;
+    font-family: PolySans;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .full-width-input {
+    width: calc(100% - 2rem);
+  }
+  
+  .password-container {
+    position: relative;
+  }
+  
+  .password-icon {
+    position: absolute;
+    right: .5em; 
+    top: 50%;
+    transform: translateY(-95%);
+    cursor: pointer;
+    color: #00272B;
+    font-size: 24px;
+    opacity: 0.32;
+  }
+  
+  
+  .forgot-password input {
+    width: 100%;
+    
+  }
+
+  .forgot-password-container{
+    margin-bottom: 25em;
+  }
+
+  .forgot-password-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 26.5rem;
+  }
+
+  .forgot-password-form-btn{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+
+  }
+  
+  .cancel-reset-button {
+    padding: 10px 20px;
+    border: 1px solid #222;
+    border-radius: 20px;
+    color: #000;
+    background-color: #e8edf4;
+    font-family: Mulish;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .cancel-reset-button:hover {
+    background-color: #dee2e7;
+  }
+
+  .send-reset-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #65FDBD;
+    color: #000;
+    font-family: Mulish;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .send-reset-button:hover {
+    background-color: #5cecb0;
+  }
+  
+
+  .provider-login{
+    width: 100%;
+    max-width: 26.5rem;
+
+  }
+
+  .provider-login button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    background: #FFFFFF;
+    color: #000000;
+    border: 1px solid #E0E0E0;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+  
+  }
+  
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .login-container {
+          padding: 24px;
+        }
+    
+        .login-card {
+          width: 95%;
+          padding: 2rem;
+        }
+      }
+    
+      @media (max-width: 480px) {
+        .login-container {
+          padding: 10px;
+          margin-top: 1em;
+        }
+    
+        .login-card {
+          padding: 0.5rem;
+        }
+    
+        .login-card h2 {
+          margin-bottom: 1rem;
+        }
+    
+        .login-card input,
+        .login-button,
+        .provider-login button {
+          padding: 12px;
+        }
+    
+        .password-icon {
+          right: 1.5em;
+          top: 40%;
+          font-size: 18px;
+        }
+
+        .forgot-password-container{
+          margin-bottom: 9em;
+        }
+
+        .forgot-password-container h2{
+          font-size: 24px;
+        }
+
+        .forgot-password-form-btn{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 100%;
+          margin-bottom: 1.5rem;
+          gap: 8px;  
+        }
+
+        .login-divider-p{
+          color: #222;
+          font-family: PolySans;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+        }
+      }
+    

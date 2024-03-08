@@ -1,0 +1,118 @@
+/*signup.css*/
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    padding-bottom: 3em;
+    width: 100%;
+    max-width: 600px;
+}
+
+.signup-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFF;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.signup-card h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #000;
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: .5em;
+}
+
+.signup-card form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 26.5rem;
+}
+
+.signup-card label {
+    color: #000;
+    font-size: 1.1em;
+    margin-bottom: 0.5rem;
+}
+
+.signup-card input {
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 50px;
+    border: 1px solid #222;
+}
+
+.password-container {
+    position: relative;
+}
+
+.signup-password-icon {
+    position: absolute;
+    right: .5em;
+    top: 50%;
+    transform: translateY(-95%);
+    cursor: pointer;
+    color: #222;
+    font-size: 24px;
+    opacity: 0.32;
+}
+
+.signup-button {
+    padding: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    background: #65FDBD;
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+}
+
+.signup-button:hover {
+    background-color: #5cecb0;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .signup-container, .signup-card {
+        width: 90%;
+        padding: 1rem;
+        margin-top: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-container {
+        margin-top: .7em;
+        padding: 10px;
+    }
+
+    .signup-card {
+        padding: 1rem;
+    }
+
+    .signup-card h2 {
+        margin-bottom: 1rem;
+        margin-top: 0;
+        font-size: 24px;
+    }
+
+    .signup-card input, .signup-button {
+        padding: 12px;
+    }
+
+    .signup-password-icon {
+        right: 1em;
+        top: 45%;
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,350 @@
+/* linkShortener.css */
+.link-shortener {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white; 
+  border-radius: 20px; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+  padding: 1.5em; 
+  width: 100%; 
+  max-width: 480px; 
+  margin: auto; 
+  font-family: 'Mulish', sans-serif;
+}
+
+.link-shortener label {
+  width: 100%;
+  margin-bottom: 8px;
+  color: #000; 
+  font-size: 1em;
+}
+
+.link-shortener input[type="text"],
+.link-shortener select{
+  width: 92%; 
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #000;
+}
+
+.link-shortener input[type="text"]:focus,
+.link-shortener select:focus,
+.link-shortener button:focus {
+  border-color: #65FDBD;
+  outline: none;
+}
+
+.link-shortener button {
+  width: 100% ; 
+  padding: 16px;
+  margin-bottom: 24px;
+  border-radius: 50px;
+  font-size: 18px;
+  background-color: #65FDBD;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.link-shortener button:hover {
+  background-color: #52d89f;
+}
+
+.customize-container{
+  display: flex;
+  width: 95.6%;
+}
+
+.domain-label, .custom-label{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.error-message {
+  width: 92%;
+  margin-top: 0;
+  color: #d8000c;
+  text-align: left;
+  font-size: 14px;
+  padding: 0;
+}
+
+.qr-code-container,
+.link-options {
+  display: flex;
+  width: 100%;
+  text-align: center;
+}
+
+.link-options button {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 50px;
+  background-color: white;
+  border: 1px solid #222;
+
+}
+
+
+.share-btn{
+  margin: 0 8px;
+}
+
+.download-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.dbqr-popup{
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dbqr-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fefefe;
+  margin: 25% auto;
+  padding: 1em;
+  border: 1px solid #888;
+  border-radius: .86em;
+  width: 20%;
+  text-align: center;
+  color: #000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dbqr-popup-content button{
+  border: 1px solid #000;
+  background-color: #fff;
+  padding: 8px;
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.dbshare-options-popup {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dbshare-options-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fefefe;
+  margin: 25% auto;
+  padding: 1em;
+  border: 1px solid #888;
+  border-radius: .86em;
+  width: 10%;
+  text-align: center;
+  color: #000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dbshare-options-popup button {
+  border-radius: 50px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.terms-text {
+  color: #000;
+  text-align: center;
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+
+@media (min-width: 768px) and (max-width: 1124px) {
+  .link-shortener {
+    padding: 16px;
+    display: flex;
+    width: 90%;
+  }
+
+  .home-container {
+    flex-direction: column; 
+  }
+}
+
+@media (max-width: 720px) {
+  .link-shortener {
+    padding: 16px;
+    display: flex;
+    width: 90%;
+  }
+
+  .home-container {
+    flex-direction: column; 
+  }
+
+  .link-shortener input[type="text"],
+  .link-shortener select,
+  .link-shortener button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .link-shortener button {
+    width: 100% ; 
+    padding: 16px;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #65FDBD;
+    color: #000;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .download-options button,
+  .link-options button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .customize-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+
+.link-options button {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 50px;
+  background-color: white;
+  border: 1px solid #222;
+
+}
+
+.link-options button:hover {
+  background-color: #e7ebe9;
+}
+
+.share-btn{
+  margin: 0 4px;
+}
+
+.download-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+
+.dbshare-options-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fefefe;
+  margin: 50% auto;
+  padding: 1em;
+  border: 1px solid #888;
+  border-radius: .86em;
+  width: 50%;
+  text-align: center;
+  color: #000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dbshare-options-popup-content button{
+  background: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.dbqr-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fefefe;
+  margin: 50% auto;
+  padding: 1em;
+  border: 1px solid #888;
+  border-radius: .86em;
+  width: 60%;
+  text-align: center;
+  color: #000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* .qr-popup {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  top: 120%;
+  right: 10%;
+  z-index: 2;
+}
+
+.qr-popup button{
+  border: 1px solid #000;
+  background-color: #fff;
+  padding: 8px;
+}
+
+.qr-popup button:hover {
+  background-color: #e7ebe9;
+}
+
+.share-options-popup {
+  position: absolute;
+  display: flex;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  top: 120%;
+  right: 13%;
+  z-index: 2;
+}
+
+.share-options-popup button {
+  background-color: white;
+  border: none;
+} */
+
+}
+

@@ -1,0 +1,34 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .social-icons a {
+    width: 24px; 
+    height: 24px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      text-align: center; 
+    }
+  
+    .social-icons {
+      margin-top: 20px;
+    }
+  }
+  

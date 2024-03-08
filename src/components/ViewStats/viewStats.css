@@ -1,0 +1,251 @@
+/*viewStats.css*/
+.view-stats-sidebar {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    /* width: 100%;  */
+    min-width: 600px; 
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000; 
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+  
+  
+  .view-stats-sidebar.active {
+    right: 0; 
+  }
+  
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(243deg, #2472FC 0%, #8711C1  100%);
+    padding:0 2em;
+    margin-bottom: 2.5rem;
+  }
+
+  .sidebar-header button{
+    color: #FFF;
+  }
+  
+  .sidebar-header h2 {
+    color: #FFF;
+    font-family: Mulish;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+  }
+  
+  .sidebar-header button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .stats-thumbnail {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background: rgba(50, 101, 244, 0.10);
+    gap: 10px;
+    padding: .8em .8em;
+    margin: 0 1.5em;
+    margin-bottom: 1em;
+    
+  }
+
+  .stats-thumbnail-top{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .stats-thumbnail-top img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0;
+  }
+  
+  .stats-thumbnail-top p {
+    color: #222;
+    font-family: Mulish;
+    font-size: 1.1em;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .stats-thumbnail-bottom {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(50, 101, 244, 0.30);
+    padding: 1em;
+    margin: 0;
+    overflow: hidden;
+    word-wrap: break-word; 
+  }
+  
+  .stats-thumbnail-bottom p {
+    color: #000;
+    font-family: Mulish;
+    font-size: 13px;
+    font-style: normal;
+    margin: 0;
+    width: 100%;
+  }
+
+
+  .divider{
+    background: #F0F0F0;
+    margin-top: 1em;
+  }
+  
+  .stats-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1em;
+    margin: 1em 1.5em;
+  }
+  
+  .stat-card {
+    border-radius: 10px;
+    background: rgba(50, 101, 244, 0.10);
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .stat-card h3 {
+    display: flex;
+    font-size: 18px;
+    margin-top: .8em;
+    color: #000;
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+  }
+  
+  .stat-card p {
+    display: flex;
+    color: #000;
+    font-family: Mulish;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .change {
+    display: flex;
+    margin-top: 4px;
+    color: #FFF;
+    text-align: center;
+    font-family: mulish;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    width: 18px;
+  }
+  
+  .increase {
+    color: green;
+    background-color: rgb(223, 255, 223);
+    padding: 3px;
+  }
+  
+  .decrease {
+    color: red;
+    background-color: rgb(255, 223, 223);
+    padding: 3px;
+    border-radius: 8px;
+  }
+  
+  .date-range {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .date-range select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-left: 10px; 
+    
+  }
+  
+  .date-range button {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+  }
+  
+
+  
+  /* Responsive design */
+@media (max-width: 580px) {
+  .view-stats-sidebar {
+    width: 100%; 
+    min-width: 0; 
+    right: 0; 
+    overflow-y: scroll;
+  }
+
+  .sidebar-header {
+    padding: 0.8em; 
+  }
+
+  .stats-thumbnail {
+    margin: 0 0.5em; 
+  }
+
+  .stats-thumbnail img {
+    width: 24px;
+    height: 24px; 
+  }
+
+  .stats-thumbnail-top p {
+    color: #222;
+    font-family: Mulish;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .stats-cards-container {
+    grid-template-columns: 1fr; 
+    margin: 1em 0.8em; 
+  }
+
+  .stat-card {
+    padding: 10px; 
+  }
+
+  .stat-card h3 {
+    font-size: 14px; 
+  }
+
+  .stat-card p {
+    font-size: 16px; 
+  }
+}
+
+/* For screens larger than 768px, the sidebar width remains fixed at 400px */
+@media (min-width: 769px) {
+  /* No changes needed for larger screens */
+}

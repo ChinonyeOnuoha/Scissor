@@ -1,0 +1,341 @@
+/* Dashboard.css */
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 1150px;
+  }
+  
+  .dashboard-container h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .links-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .link-card {
+    color: black;
+    overflow: hidden;
+    display: flex;
+    padding: 2.5em;
+    width: 100%;
+    border-radius: 20px;
+    background: rgba(76, 201, 240, 0.50);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .link-card-image {
+    border-radius: 50%;
+    margin-right: 1em;
+  }
+  
+  .link-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .link-details .short-link {
+    display: flex;
+    align-items: center;
+    color: #222;
+    font-family: Mulish;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .short-link p{
+    margin: 0;
+  }
+
+  .short-link button{
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .edit-mode input{
+    padding: 2em 1em;
+    border-radius: 10px;
+    border: none;
+    margin: 0;
+    width: 100%;
+  }
+
+  .edit-actions{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  .edit-actions button{
+    border: 1px solid #000;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .long-link-input{
+    padding: 2em 1em;
+    border-radius: 10px;
+    border: none;
+    margin: 0;
+
+  }
+  
+  .link-actions {
+    position: relative;
+    display: flex;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  .link-actions button {
+    display: flex;
+    background: none; 
+    color: #000;
+    font-size: 1rem;
+    border-radius: 50px;
+    border: 1px solid #FFF;
+    align-items: center;
+    justify-content: center;
+    padding: .85em 1em;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .link-actions .delete-btn{
+    border: none;
+  }
+
+  .dbqr-popup{
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .dbqr-popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fefefe;
+    margin: 25% auto;
+    padding: 1em;
+    border: 1px solid #888;
+    border-radius: .86em;
+    width: 20%;
+    text-align: center;
+    color: #000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dbqr-popup-content button{
+    border: 1px solid #000;
+    background-color: #fff;
+    padding: 8px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+
+  .close {
+    color: red;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .dbshare-options-popup {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .dbshare-options-popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fefefe;
+    margin: 25% auto;
+    padding: 1em;
+    border: 1px solid #888;
+    border-radius: .86em;
+    width: 10%;
+    text-align: center;
+    color: #000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dbshare-options-popup button {
+    border-radius: 50px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .delete-confirmation-modal{
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 25% auto;
+    padding: 1em;
+    border: 1px solid #888;
+    border-radius: .86em;
+    width: 20%;
+    text-align: center;
+    color: #000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content button{
+    padding: 1em;
+    border-radius: 50px;
+    border: 1px solid #8c8b8b;
+    margin: 8px;
+    background: none;
+    cursor: pointer;
+  }
+  
+
+  @media (min-width: 768px) and (max-width: 1124px) {
+    .links-list {
+      flex-direction: column;
+      width: 90%;
+      padding: 1em;
+    }
+
+  }
+  
+  
+  /* Responsive Styles */
+  @media (max-width: 720px) {
+    .links-list {
+      flex-direction: column;
+      width: 90%;
+      padding: 1em;
+    }
+
+    h1{
+        font-size:1em 0;
+        margin: 0;
+    }
+  
+    .link-card {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        padding: 1.5em;
+        margin: 0;
+    }
+
+    .link-card-image {
+        border-radius: 50%;
+        margin: 0;
+    }
+
+    .link-details .short-link{
+        gap: 0;
+    }
+
+    .link-details .short-link p{
+      font-size: 14px;
+    }
+
+    .link-details .short-link button{
+        width: 18px;
+        height: 18px;
+    }
+
+    .short-link button img{
+        width: 18px;
+        height: 18px;
+    }
+  
+    .link-actions {
+      flex-direction: column;
+      align-self: stretch;
+    }
+
+    .edit-mode{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dbshare-options-popup-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #fefefe;
+        margin: 50% auto;
+        padding: 1em;
+        border: 1px solid #888;
+        border-radius: .86em;
+        width: 50%;
+        text-align: center;
+        color: #000;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .dbqr-popup-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #fefefe;
+        margin: 50% auto;
+        padding: 1em;
+        border: 1px solid #888;
+        border-radius: .86em;
+        width: 60%;
+        text-align: center;
+        color: #000;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 50% auto;
+        padding: 1em;
+        border: 1px solid #888;
+        border-radius: .86em;
+        width: 60%;
+        text-align: center;
+        color: #000;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+     
+  }
+
+  

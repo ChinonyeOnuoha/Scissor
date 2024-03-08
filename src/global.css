@@ -1,0 +1,61 @@
+/*global.css*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Mulish:wght@400;600;700&display=swap');
+
+/*colors */
+:root {
+  --color-primary: #65FDBD;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-dark: #141414;
+  --color-grey: #424F55;
+  --color-light-blue: #4CC9F0;
+  --color-blue: #3265F4;
+  --color-green: #33A34E;
+  --color-orange: #FF561E;
+  --color-dark-grey: #222222;
+}
+
+/* Background styles */
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(63deg, #8711C1 0%, #2472FC 100%);
+  font-family: 'Mulish', sans-serif;
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--color-white);
+  overflow-x: hidden;
+}
+
+/* Background pattern styles*/
+body::before {
+  content: '';
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url(/public/assets/Pattern.svg);
+  background-size: contain;
+  opacity: 0.8; 
+  z-index: -1;
+}
+
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab', serif;
+}
+
+/* Container styles */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 120px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+}
+
