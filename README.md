@@ -1,12 +1,11 @@
 # Scissor: Easy Link Shortening Tool
 
+Welcome to Scissor, the solution for turning those cumbersome URLs into neat, shareable links. Built on the Firebase platform, Scissor not only shortens links but also offers insights through analytics, custom link options, and easy sharing capabilities. It's designed for individuals, businesses, and brands who seek to simplify their digital presence.
+
+
 
 <img width="1566" alt="Screenshot 2024-03-08 at 7 09 56 PM" src="https://github.com/ChinonyeOnuoha/Scissor/assets/57465097/c8811a64-b4bf-46e6-ba98-7cac1a4f89df">
 
-
-
-
-Welcome to Scissor, the solution for turning those cumbersome URLs into neat, shareable links. Built on the Firebase platform, Scissor not only shortens links but also offers insights through analytics, custom link options, and easy sharing capabilities. It's designed for individuals, businesses, and brands who seek to simplify their digital presence.
 
 ## Features
 
