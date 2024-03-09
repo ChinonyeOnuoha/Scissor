@@ -9,7 +9,7 @@ import Pricing from './components/Pricing/Pricing';
 import FAQs from './components/FAQs/FAQs';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import { useAuth } from './AuthContext';
+// import { useAuth } from './AuthContext';
 import { useEffect } from 'react';
 import { ref, get } from 'firebase/database';
 import { firebaseDatabase } from './utils/firebase-config';
@@ -17,15 +17,14 @@ import { firebaseDatabase } from './utils/firebase-config';
 
 
 function App() {
-  const { currentUser } = useAuth(); 
   const navigate = useNavigate();
   const location = useLocation(); 
 
   useEffect(() => {
     const redirectIfNeeded = async () => {
       const hash = location.hash.replace('#', '');
-      if (hash && currentUser) {
-        const statsRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${hash}`);
+      if (hash) {
+        const statsRef = ref(firebaseDatabase, `links/${hash}`);
         const snapshot = await get(statsRef); 
         const data = snapshot.val();
         if (data && /^(ftp|http|https):\/\/[^ "]+$/.test(data.originalLink)) {
@@ -37,7 +36,7 @@ function App() {
     };
 
     redirectIfNeeded();
-  }, [currentUser, location.hash, navigate]);
+  }, [location.hash, navigate]);
 
   return (
     <>
