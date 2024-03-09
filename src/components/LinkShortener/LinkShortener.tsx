@@ -187,7 +187,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
     <div className="link-shortener container home-container">
       <ToastContainer 
       position="top-right"
-      autoClose={2000}
+      autoClose={1000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
@@ -195,7 +195,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      style={{ width: "60%"}}
+      style={{ width: "auto"}}
       closeButton={false}
       />
 

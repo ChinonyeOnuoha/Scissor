@@ -5,6 +5,7 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth} from 'firebase/auth';
 import { ref} from 'firebase/database';
 import { getAnalytics } from 'firebase/analytics';
+import { FacebookAuthProvider } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,6 +29,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
 const firebaseDatabase = getDatabase();
+const provider = new FacebookAuthProvider();
 const getStatsByLinkId = (linkId) => {
   const statsRef = ref(firebaseDatabase, `stats/${linkId}`);
   return statsRef;
@@ -35,4 +37,4 @@ const getStatsByLinkId = (linkId) => {
 
 
 // Export for use in other parts of the app
-export { db, auth, analytics, app, firebaseDatabase, getStatsByLinkId  };
+export { db, auth, analytics, app, firebaseDatabase, provider, getStatsByLinkId  };

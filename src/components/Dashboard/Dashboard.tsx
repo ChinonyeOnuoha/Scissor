@@ -211,7 +211,7 @@ const handleDeleteConfirmation = (link: LinkType) => {
     <div className="dashboard-container container">
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -219,7 +219,7 @@ const handleDeleteConfirmation = (link: LinkType) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ width: "60%" }}
+        style={{ width: "auto" }}
         closeButton={false}
       />
   
