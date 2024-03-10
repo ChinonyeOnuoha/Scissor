@@ -46,7 +46,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
     }
 
     const linkId = customAlias.trim() ? customAlias : uuidv4().slice(0, 8);
-    const newShortenedLink = `${window.location.origin}/#${linkId}`;
+    const newShortenedLink = `https://scissor-kappa.vercel.app/#${linkId}`;
 
     try {
       const linkData = {
@@ -202,7 +202,7 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
               value={domain}
               onChange={(e) => setDomain(e.target.value)}
             >
-              <option value="https://scissor-kappa.vercel.app">scissor-kappa.vercel.app</option>
+              <option value="">scissor-kappa.vercel.app</option>
             </select>
             </div>
             <div className="custom-label">

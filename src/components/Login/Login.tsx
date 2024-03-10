@@ -6,6 +6,8 @@ import { auth } from '../../utils/firebase-config';
 import './login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -19,17 +21,26 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState('');
     const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (validateForm()) {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Error logging in: ', error);
-    }
-  }
-  };
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!email || !password) {
+        setEmailError(!email ? 'Email is required' : '');
+        setPasswordError(!password ? 'Password is required' : '');
+        return;
+      }
+  
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        toast.success('Login successful!');
+        navigate('/dashboard');
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('auth/wrong-password')) {
+          setPasswordError('Incorrect password. Please try again');
+        } else {
+          setPasswordError('Incorrect password. Please try again');
+        }
+      }
+    };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -57,36 +68,21 @@ const Login = () => {
     }
   };
 
-
-  const validateForm = () => {
-    let isValid = true;
-  
-    if (!email) {
-      setEmailError('Email is required');
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError('Email address is invalid');
-      isValid = false;
-    } else {
-      setEmailError('');
-    }
-  
-    if (!password) {
-      setPasswordError('Password is required');
-      isValid = false;
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
-      isValid = false;
-    } else {
-      setPasswordError('');
-    }
-  
-    return isValid;
-  };
-
-
   return (
     <div className="login-container container">
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ width: "auto" }}
+        closeButton={false}
+      />
       {!isResetPassword ? (
         <div className="login-card">
           <h2>Login</h2>

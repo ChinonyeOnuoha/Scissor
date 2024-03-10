@@ -6,6 +6,8 @@ import { auth } from '../../utils/firebase-config';
 import './signup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
     const [fullName, setFullName] = useState('');
@@ -22,9 +24,11 @@ const Signup = () => {
         if (validateForm()) {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
+            toast.success('Signed up successfully');
             navigate('/');
         } catch (error) {
             console.error('Error signing up:', error);
+            toast.error('Failed to sign up. Please try again.');
         }
     }
     };
@@ -71,6 +75,19 @@ const Signup = () => {
 
     return (
         <div className="signup-container container">
+            <ToastContainer
+            position="top-right"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            style={{ width: "auto" }}
+            closeButton={false}
+            />
             <div className="signup-card">
                 <h2>Sign up</h2>
                 <form onSubmit={handleSubmit}>

@@ -32,6 +32,15 @@
     font-style: normal;
     font-weight: 400;
   }
+
+  .btn{
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    background-color: #65FDBD;
+    border-radius: 50px;
+    border: none;
+    font-size: 16px;
+  }
   
   /* Responsive design */
   @media (max-width: 768px) {
