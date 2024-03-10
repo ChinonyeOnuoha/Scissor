@@ -1,0 +1,31 @@
+/* pageNotFound.css */
+
+.page-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.page-not-found h1 {
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.page-not-found p {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.page-not-found a {
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.page-not-found a:hover {
+    text-decoration: underline;
+}

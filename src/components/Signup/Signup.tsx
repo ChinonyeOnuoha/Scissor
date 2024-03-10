@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthErrorCodes } from "firebase/auth";
 
 const Signup = () => {
     const [fullName, setFullName] = useState('');
@@ -21,17 +22,32 @@ const Signup = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (validateForm()) {
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            toast.success('Signed up successfully');
-            navigate('/');
-        } catch (error) {
-            console.error('Error signing up:', error);
-            toast.error('Failed to sign up. Please try again.');
+        setFullNameError('');
+        setEmailError('');
+        setPasswordError('');
+      
+        if (!email || !password || !fullName.trim()) {
+          setFullNameError(!fullName ? 'Full name is required' : '');
+          setEmailError(!email ? 'Email is required' : '');
+          setPasswordError(!password ? 'Password is required' : '');
+          return;
         }
-    }
-    };
+      
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+          toast.success('Signed up successfully');
+          navigate('/dashboard');
+        } catch (error: any) {
+          switch (error.code) {
+            case AuthErrorCodes.EMAIL_EXISTS:
+              setEmailError('This email is already in use. Please login or reset your password.');
+              break;
+            default:
+              setEmailError('Failed to sign up. Please try again.');
+              break;
+          }
+        }
+      };
 
     const handleProviderSignup = async (provider: AuthProvider) => {
         try {
@@ -45,33 +61,7 @@ const Signup = () => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-
-    const validateForm = () => {
-        let isValid = true;
-        
-        if (!fullName.trim()) {
-            setFullNameError('Full name is required');
-            isValid = false;
-        } else {
-            setFullNameError('');
-        }
-
-        if (!email.includes('@')) {
-            setEmailError('Please enter a valid email');
-            isValid = false;
-        } else {
-            setEmailError('');
-        }
-
-        if (password.length < 6) {
-            setPasswordError('Password must be at least 6 characters long');
-            isValid = false;
-        } else {
-            setPasswordError('');
-        }
-
-        return isValid;
-    };
+    
 
     return (
         <div className="signup-container container">

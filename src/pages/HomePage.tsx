@@ -7,7 +7,7 @@ import './HomePage.css';
 
 const HomePage = () => {
   const siteTitle = 'Scissor - Simplify Your Links';
-  const description = 'Scissor provides seamless link shortening and tracking, enabling you to condense long URLs, track link activity, and manage branded domains with ease. Perfect for businesses and individuals looking to enhance their digital presence.';
+  const description = 'Scissor provides seamless link shortening and tracking, enabling you to shorten long URLs, track link activity, and manage branded domains with ease. Perfect for businesses and individuals looking to enhance their digital presence.';
   const keywords = 'Scissor, URL shortener, link tracking, branded links, QR codes, digital presence, simplify links';
   
   return (

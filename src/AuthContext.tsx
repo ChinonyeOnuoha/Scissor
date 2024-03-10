@@ -4,8 +4,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, User, signOut as firebaseSignOut } from 'firebase/auth';
 import { auth } from './utils/firebase-config';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 type AuthContextType = {
   currentUser: User | null;
@@ -38,7 +37,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signOut = async () => {
     await firebaseSignOut(auth);
-    toast.success('Logged out successfully!');
   };
 
   const value = {
@@ -47,22 +45,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signOut,
   };
 
-  return (
-    <>
-    <ToastContainer
-        position="top-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        style={{ width: "auto" }}
-        closeButton={false}
-      />
-      <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-  </>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  
 };

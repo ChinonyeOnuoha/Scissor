@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthErrorCodes } from "firebase/auth";
 
 
 
@@ -23,21 +24,26 @@ const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      setEmailError('');
+      setPasswordError('');
+    
       if (!email || !password) {
         setEmailError(!email ? 'Email is required' : '');
         setPasswordError(!password ? 'Password is required' : '');
         return;
       }
-  
+    
       try {
         await signInWithEmailAndPassword(auth, email, password);
         toast.success('Login successful!');
         navigate('/dashboard');
-      } catch (error) {
-        if (error instanceof Error && error.message.includes('auth/wrong-password')) {
+      } catch (error: any) {
+        if (error.code === AuthErrorCodes.INVALID_PASSWORD) {
           setPasswordError('Incorrect password. Please try again');
+        } else if (error.code === AuthErrorCodes.USER_DELETED) {
+          setEmailError('No account found with this email. Please sign up');
         } else {
-          setPasswordError('Incorrect password. Please try again');
+          toast.error('Please check your email and password and try again');
         }
       }
     };
@@ -50,11 +56,11 @@ const Login = () => {
   const handleForgotPassword = async () => {
     try {
       await sendPasswordResetEmail(auth, forgotPasswordEmail);
-      alert('Password reset email sent.');
+      toast.success('Password reset email sent.');
       setIsResetPassword(false); 
     } catch (error) {
       console.error('Error sending password reset email: ', error);
-      alert('Error: check that your email is entered correctly ');
+      toast.error('Error: check that your email is entered correctly ');
     }
   };
 
@@ -72,7 +78,7 @@ const Login = () => {
     <div className="login-container container">
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={2500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

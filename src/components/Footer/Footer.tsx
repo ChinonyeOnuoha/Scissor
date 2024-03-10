@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className="container">
     <footer className="footer">
-      <p>© 2024 Scissor. All rights reserved.</p>
+      <p>© 2024 Scissor. All rights reserved</p>
       <div className="social-icons">
         <a href="https://twitter.com"><img src="/assets/twitter.svg" alt="Twitter" /></a>
         <a href="https://facebook.com"><img src="/assets/facebook.svg" alt="Facebook" /></a>
