@@ -1,6 +1,9 @@
 // Login.test.js
 import { render, fireEvent, screen } from '@testing-library/react';
 import Login from './Login';
+import * as authService from '../AuthContext'; 
+
+jest.mock('../../services/authService'); 
 
 it('renders login form', () => {
   render(<Login />);
@@ -8,13 +11,16 @@ it('renders login form', () => {
   expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
 });
 
-it('submits the form with email and password', () => {
-  const mockSubmit = jest.fn();
-  render(<Login onSubmit={mockSubmit} />);
+it('submits the form with email and password', async () => {
+  const emailInput = screen.getByLabelText(/email/i);
+  const passwordInput = screen.getByLabelText(/password/i);
+  const loginButton = screen.getByRole('button', { name: /login/i });
   
-  fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'test@test.com' } });
-  fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password123' } });
-  fireEvent.click(screen.getByText(/login/i));
+  authService.signup.mockResolvedValueOnce(true); 
   
-  expect(mockSubmit).toHaveBeenCalledWith('test@test.com', 'password123');
+  fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+  fireEvent.change(passwordInput, { target: { value: 'password123' } });
+  fireEvent.click(loginButton);
+  
+  expect(authService.signup).toHaveBeenCalledWith('test@test.com', 'password123');
 });

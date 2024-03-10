@@ -9,8 +9,6 @@ import { FacebookAuthProvider } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDNNK36LKkNT774-Yod5jWIDZ2zjSnLtvA",
   authDomain: "scissor-49c82.firebaseapp.com",

@@ -24,8 +24,8 @@ function App() {
     const redirectIfNeeded = async () => {
       const hash = location.hash.replace('#', '');
       if (hash) {
-        const statsRef = ref(firebaseDatabase, `links/${hash}`);
-        const snapshot = await get(statsRef); 
+        const linkRef = ref(firebaseDatabase, `publicLinks/${hash}`);
+        const snapshot = await get(linkRef);
         const data = snapshot.val();
         if (data && /^(ftp|http|https):\/\/[^ "]+$/.test(data.originalLink)) {
           window.location.href = data.originalLink;
@@ -34,9 +34,10 @@ function App() {
         }
       }
     };
-
+  
     redirectIfNeeded();
   }, [location.hash, navigate]);
+  
 
   return (
     <>

@@ -305,46 +305,5 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* .qr-popup {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 0 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  top: 120%;
-  right: 10%;
-  z-index: 2;
-}
-
-.qr-popup button{
-  border: 1px solid #000;
-  background-color: #fff;
-  padding: 8px;
-}
-
-.qr-popup button:hover {
-  background-color: #e7ebe9;
-}
-
-.share-options-popup {
-  position: absolute;
-  display: flex;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  top: 120%;
-  right: 13%;
-  z-index: 2;
-}
-
-.share-options-popup button {
-  background-color: white;
-  border: none;
-} */
-
 }
 

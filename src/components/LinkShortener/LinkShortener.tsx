@@ -6,7 +6,6 @@ import { firebaseDatabase } from '../../utils/firebase-config';
 import QRCode from 'qrcode.react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../../AuthContext';
-import { useNavigate } from 'react-router-dom';
 import * as QRCodeGenerator from 'qrcode';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,8 +16,7 @@ interface LinkShortenerProps {
 }
 
 const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
-  const { currentUser, isLoggedIn } = useAuth();
-  const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [originalLink, setOriginalLink] = useState('');
   const [shortenedLink, setShortenedLink] = useState('');
   const [customAlias, setCustomAlias] = useState('');
@@ -27,54 +25,52 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
   const [error, setError] = useState('');
   const [showDBShareOptions, setShowDBShareOptions] = useState(false);
   const [showDBQRPopup, setShowDBQRPopup] = useState(false);
-  const [linkError, setLinkError] = useState('');
+  const [linkError] = useState('');
 
 
   const shortenLink = async () => {
-    if (validateLink()) {
+    setError('');
     if (!originalLink) {
-      setError('Please enter a link to shorten.');
+      setError('Please enter a URL to shorten.');
       return;
     }
-  
-    if (!isLoggedIn) {
+
+    if (!/^(http|https):\/\/[^ "]+$/.test(originalLink)) {
+      setError('Please enter a valid URL.');
+      return;
+    }
+
+    if (!currentUser) {
       setError('You must be logged in to shorten links.');
-      navigate('/login');
       return;
     }
-  
+
+    const linkId = customAlias.trim() ? customAlias : uuidv4().slice(0, 8);
+    const newShortenedLink = `${window.location.origin}/#${linkId}`;
+
     try {
-      setError('');
-      const linkId = customAlias.trim() ? customAlias : uuidv4().slice(0, 5);
-      const newShortenedLink = `https://scissor-kappa.vercel.app/#${linkId}`;
+      const linkData = {
+        originalLink,
+        shortLink: newShortenedLink,
+        linkId,
+        userId: currentUser.uid
+      };
 
+      await set(ref(firebaseDatabase, `publicLinks/${linkId}`), linkData);
       if (currentUser) {
-        const newLinkRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkId}`);
-        await set(newLinkRef, {
-          originalLink,
-          shortLink: newShortenedLink,
-          linkId
-        }).then(() => {
-          setShortenedLink(newShortenedLink);
-          setShowQRCode(true);
-        }).catch((error) => {
-          console.error("Firebase operation failed:", error);
-          setError('Failed to shorten the link. Please try again.');
-        });
-
-  
-        setShortenedLink(newShortenedLink);
-        setShowQRCode(true);
-        toast.success('Shortened link saved successfully.');
-      } else {
-        setError('An unexpected error occurred. Please try again.');
+        await set(ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkId}`), linkData);
       }
+
+      setShortenedLink(newShortenedLink);
+      setShowQRCode(true);
+      toast.success('Link shortened successfully.');
     } catch (error) {
-      console.error(error);
-      setError('An error occurred while shortening the link.');
+      console.error('Error creating shortened link: ', error);
+      setError('Failed to shorten the link. Please try again.');
     }
-  }
-  };  
+  };
+
+ 
 
   const copyToClipboard = async () => {
     try {
@@ -169,18 +165,6 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
     setShowQRCode(false);
   };
 
-  const validateLink = () => {
-    if (!originalLink) {
-      setLinkError('Please enter a URL to shorten.');
-      return false;
-    } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(originalLink)) {
-      setLinkError('Enter a valid URL.');
-      return false;
-    } else {
-      setLinkError('');
-      return true;
-    }
-  };
   
 
   return (

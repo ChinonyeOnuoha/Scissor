@@ -1,5 +1,5 @@
 // AuthContext.tsx
-//React Context API: that holds the isLoggedIn state and provides a way to update it.
+// Context API: that holds the isLoggedIn state and provides a way to update it.
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, User, signOut as firebaseSignOut } from 'firebase/auth';
