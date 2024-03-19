@@ -29,17 +29,16 @@ const initialStatsState = {
   const ViewStats = ({ linkData, onClose }: ViewStatsProps) => {
     const [stats, setStats] = useState<StatsType>(initialStatsState);
     const [dateRange, setDateRange] = useState('last7Days');
-    const currentUser = useAuth().currentUser; 
+    const { currentUser } = useAuth();
   
     useEffect(() => {
-        if (currentUser && linkData) {
-          const statsRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkData.linkId}/stats`);
-          const unsubscribe = onValue(statsRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) setStats(data);
-          });
-      
-          // Unsubscribe when the component unmounts
+      if (currentUser && linkData) {
+        const statsRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkData.linkId}/stats`);
+        const unsubscribe = onValue(statsRef, (snapshot) => {
+          const data: StatsType = snapshot.val();
+          if (data) setStats(data);
+        });
+
           return () => unsubscribe(); 
         }
       }, [linkData, currentUser]);

@@ -7,7 +7,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import PageNotFound from './pages/PageNotFound';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import { ref, get } from 'firebase/database';
+import { ref, get, runTransaction } from 'firebase/database';
 import { firebaseDatabase } from './utils/firebase-config';
 
 
@@ -21,6 +21,14 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation(); 
 
+  // Increment stats when a shortened link is accessed
+  const incrementStats = async (linkId: String) => {
+    const statsRef = ref(firebaseDatabase, `publicLinks/${linkId}/Clicks`);
+    runTransaction(statsRef, (currentClicks) => {
+      return (currentClicks || 0) + 1;
+    });
+  };
+
   useEffect(() => {
     const redirectIfNeeded = async () => {
       const hash = location.hash.replace('#', '');
@@ -29,6 +37,7 @@ function App() {
         const snapshot = await get(linkRef);
         const data = snapshot.val();
         if (data && /^(ftp|http|https):\/\/[^ "]+$/.test(data.originalLink)) {
+          await incrementStats(hash);
           window.location.href = data.originalLink;
         } else {
           navigate('/'); 
