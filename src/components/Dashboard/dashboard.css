@@ -10,7 +10,8 @@
   
   .dashboard-container h1 {
     text-align: center;
-    margin-bottom: 3rem;
+    font-size: 2rem;
+    /* margin-bottom: 3rem; */
   }
   
   .links-list {
@@ -74,6 +75,20 @@
     width: 100%;
   }
 
+  .edit-mode {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; 
+}
+
+.edit-input {
+    padding: 8px;
+    margin: 4px 0; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
   .edit-actions{
     display: flex;
     justify-content: flex-end;
@@ -90,12 +105,19 @@
 
   .long-link-input{
     padding: 2em 1em;
+    width: 90%;
     border-radius: 10px;
     border: none;
     margin: 0;
 
   }
   
+  .link-timestamp {
+    font-size: 0.8rem;
+    color: #f1f1f1;
+    text-align: center;
+}
+
   .link-actions {
     position: relative;
     display: flex;
@@ -291,7 +313,8 @@
     .edit-mode{
         display: flex;
         flex-direction: column;
-        align-items: center;
+        width: 90%;
+        /* align-items: center; */
     }
 
     .dbshare-options-popup-content {

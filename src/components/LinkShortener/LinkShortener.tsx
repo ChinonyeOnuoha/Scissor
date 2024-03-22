@@ -1,7 +1,7 @@
 // LinkShortener.tsx
 import React, { useState } from 'react';
 import './linkShortener.css';
-import { ref, set } from 'firebase/database';
+import { ref, set} from 'firebase/database';
 import { firebaseDatabase } from '../../utils/firebase-config';
 import QRCode from 'qrcode.react';
 import { v4 as uuidv4 } from 'uuid';
@@ -47,18 +47,27 @@ const LinkShortener: React.FC<LinkShortenerProps> = ({ className }) => {
 
     const linkId = customAlias.trim() ? customAlias : uuidv4().slice(0, 8);
     const newShortenedLink = `https://scissor-kappa.vercel.app/#${linkId}`;
+    const timestamp = Date.now();
 
     try {
       const linkData = {
         originalLink,
         shortLink: newShortenedLink,
+        timestamp, 
         linkId,
-        userId: currentUser.uid
       };
-
+  
       await set(ref(firebaseDatabase, `publicLinks/${linkId}`), linkData);
+      await set(ref(firebaseDatabase, `publicLinks/${linkId}/Clicks`), 0);
+  
       if (currentUser) {
         await set(ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkId}`), linkData);
+        await set(ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkId}/stats`), {
+          Impressions: 1,
+          Clicks: 0,
+          UniqueClicks: 0,
+          RepeatedClicks: 0
+        });
       }
 
       setShortenedLink(newShortenedLink);

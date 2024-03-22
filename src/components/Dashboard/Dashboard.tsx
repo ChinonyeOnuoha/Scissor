@@ -1,6 +1,6 @@
 // Dashboard.tsx
 import React, { useState, useEffect } from 'react';
-import { ref, onValue, remove, update } from 'firebase/database';
+import { ref, onValue, remove, set} from 'firebase/database';
 import { firebaseDatabase } from '../../utils/firebase-config';
 import { useAuth } from '../../AuthContext';
 import EmptyState from '../EmptyState/EmptyState'; 
@@ -17,6 +17,7 @@ export interface LinkType {
     originalLink: string;
     shortLink: string;
     thumbnailUrl?: string;
+    timestamp: number;
   }  
 
   const Dashboard = () => {
@@ -26,10 +27,12 @@ export interface LinkType {
     const [editMode, setEditMode] = useState<string | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [linkToDelete, setLinkToDelete] = useState<LinkType | null>(null);
-    const [showDBShareOptions, setShowDBShareOptions] = useState(false);
-    const [showDBQRPopup, setShowDBQRPopup] = useState(false);
     const [showViewStats, setShowViewStats] = useState(false);
     const [currentLinkStats, setCurrentLinkStats] = useState<LinkType | null>(null);
+    const [activeShareLinkId, setActiveShareLinkId] = useState<string | null>(null);
+    const [activeQRLinkId, setActiveQRLinkId] = useState<string | null>(null);
+    const [editAlias, setEditAlias] = useState('');
+
 
 
   // Fetch links from Firebase
@@ -38,16 +41,17 @@ export interface LinkType {
       const userLinksRef = ref(firebaseDatabase, `users/${currentUser.uid}/links`);
       onValue(userLinksRef, (snapshot) => {
         const data = snapshot.val();
-        const linksArray: LinkType[] = data ? Object.keys(data).map((key) => ({
-          linkId: key,
-          originalLink: data[key].originalLink,
-          shortLink: data[key].shortLink,
-          thumbnailUrl: data[key].thumbnailUrl,
-        })) : [];
+        const linksArray: LinkType[] = data
+          ? Object.keys(data).map(key => ({
+              ...data[key],
+              linkId: key,
+            })).sort((a, b) => b.timestamp - a.timestamp)
+          : [];
         setLinks(linksArray);
       });
     }
   }, [currentUser]);
+
 
   // Copy to clipboard
   const copyToClipboard = (shortlink: string) => {
@@ -61,24 +65,24 @@ export interface LinkType {
   // Share on social media
   const shareOnSocialMedia = (platform: 'twitter' | 'facebook' | 'whatsapp', shortLink: string) => {
     const url = encodeURIComponent(shortLink);
-    const text = encodeURIComponent('`Check out this link`');
+    const text = encodeURIComponent('Check out this link');
     let shareUrl = '';
 
     switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-        break;
-      case 'whatsapp':
-        shareUrl = `https://wa.me/?text=${text}%20${url}`;
-        break;
-      default:
-        return;
-    } 
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+            break;
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${text}%20${url}`;
+            break;
+        default:
+            return;
+    }
     window.open(shareUrl, '_blank');
-  };
+};
   
 
   // Generate QR code
@@ -121,18 +125,46 @@ export interface LinkType {
   };
 
   // Edit link
-  const editLink = (linkId: string, newOriginalLink: string) => {
-    if (currentUser?.uid) { 
-      const linkRef = ref(firebaseDatabase, `users/${currentUser.uid}/links/${linkId}`);
-      update(linkRef, {
-        originalLink: newOriginalLink,
-    }).then(() => {
-        toast.success('Link edited!');
-    }).catch((error) => {
-        toast.error('Failed to edit!');
-    });
+  const editLink = async (linkId: string, newOriginalLink: string, newAlias: string) => {
+    if (!currentUser?.uid) return;
+  
+    const newLinkData = {
+      originalLink: newOriginalLink,
+      shortLink: `https://scissor-kappa.vercel.app/#${newAlias}`,
+      timestamp: Date.now(), 
+      thumbnailUrl: selectedLink?.thumbnailUrl || ''
+    };
+  
+    try {
+      const newPath = `users/${currentUser.uid}/links/${newAlias}`;
+      const oldPath = `users/${currentUser.uid}/links/${linkId}`;
+  
+      // Update with the new link data
+      if (linkId !== newAlias) {
+        // Remove the old link data
+        await remove(ref(firebaseDatabase, oldPath));
+      }
+  
+      // Set the new link data
+      await set(ref(firebaseDatabase, newPath), newLinkData);
+      
+      toast.success('Link updated successfully.');
+      setEditMode(null);
+  
+      // Refresh links list 
+      if (linkId !== newAlias) {
+        setLinks(links.filter(l => l.linkId !== linkId)); 
+        setLinks(prev => [...prev, { ...newLinkData, linkId: newAlias }]); 
+      } else {
+        setLinks(prev => prev.map(l => l.linkId === linkId ? { ...l, ...newLinkData } : l));
+      }
+  
+    } catch (error) {
+      console.error('Error updating link: ', error);
+      toast.error('Failed to update link.');
     }
   };
+  
 
   const handleEdit = (link: LinkType) => {
     setSelectedLink(link);
@@ -140,11 +172,11 @@ export interface LinkType {
   };
   
   // Confirms the users edit
-  const saveEdit = (linkId: string, newOriginalLink: string) => {
-    editLink(linkId, newOriginalLink);
-    setEditMode(null); 
+  const saveEdit = (newOriginalLink: string, newAlias: string) => {
+    if (selectedLink) {
+      editLink(selectedLink.linkId, newOriginalLink, newAlias);
+    }
   };
-  
 
   // View stats for link
   const viewStats = (link: LinkType) => {
@@ -192,19 +224,22 @@ const handleDeleteConfirmation = (link: LinkType) => {
     );
   };
 
-  const toggleShareOptions = () => {
-    if (showDBQRPopup) {
-      setShowDBQRPopup(false);
-    }
-    setShowDBShareOptions(!showDBShareOptions);
-  };
-  
-  const toggleQRPopup = () => {
-    if (showDBShareOptions) {
-      setShowDBShareOptions(false);
-    }
-    setShowDBQRPopup(!showDBQRPopup);
-  };
+  // Function to toggle share options visibility
+const toggleShareOptions = (linkId: string) => {
+  setActiveShareLinkId(activeShareLinkId === linkId ? null : linkId);
+  setActiveQRLinkId(null); 
+};
+
+// Function to toggle QR code popup visibility
+const toggleQRPopup = (linkId: string) => {
+  setActiveQRLinkId(activeQRLinkId === linkId ? null : linkId);
+  setActiveShareLinkId(null); 
+};
+
+
+function formatDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleString();
+}
 
 
   return (
@@ -243,40 +278,63 @@ const handleDeleteConfirmation = (link: LinkType) => {
                   </div>
     
                   {editMode === linkItem.linkId ? (
-                    <div className="edit-mode">
+                  <div className="edit-mode">
+                      <label>Edit your long link:</label>
                       <input
-                        type="text"
-                        value={selectedLink?.originalLink}
-                        onChange={(e) => setSelectedLink({ ...linkItem, originalLink: e.target.value })}
+                          type="text"
+                          value={selectedLink?.originalLink || ''}
+                          onChange={(e) => setSelectedLink(prev => prev ? { ...prev, originalLink: e.target.value } : null)}
+                          className="edit-input"
+                      />
+                      <label>Edit your alias:</label>
+                      <input
+                          type="text"
+                          value={editAlias}
+                          onChange={(e) => {
+                            setEditAlias(e.target.value);
+                            if (selectedLink) {
+                                setSelectedLink({ ...selectedLink, linkId: e.target.value });
+                            }
+                        }}
                         className="edit-input"
                       />
                       <div className="edit-actions">
-                        <button onClick={() => saveEdit(linkItem.linkId, selectedLink?.originalLink || '')}>
+                      <button onClick={() => saveEdit(selectedLink?.originalLink || '', editAlias)}>
                           Save
-                        </button>
-                        <button onClick={() => setEditMode(null)}>
-                          Cancel
-                        </button>
+                      </button>
+                          <button onClick={() => setEditMode(null)}>
+                              Cancel
+                          </button>
                       </div>
-                    </div>
+                  </div>
                   ) : (
-                    <input type="text" className='long-link-input' value={linkItem.originalLink} readOnly />
+                      <div>
+                          <input type="text" className='long-link-input' value={linkItem.originalLink} readOnly />
+                      </div>
                   )}
 
                   <div className="link-actions">
-                    <button onClick={toggleShareOptions} className="share-btn"> <img src="/assets/share-2.svg" alt="share icon" /> Share link</button>
-                    <button onClick={toggleQRPopup}><img src="/assets/clarity_qr-code-line.svg" alt="qr icon" /> QR Code</button>
+                    <button onClick={() => toggleShareOptions(linkItem.linkId)}><img src="/assets/share-2.svg" alt="share icon" /> Share link</button>
+                    
+                    <button onClick={() => toggleQRPopup(linkItem.linkId)}><img src="/assets/clarity_qr-code-line.svg" alt="qr icon" /> QR Code</button>
+                    
                     <button onClick={() => handleEdit(linkItem)}>
                         <img src="/assets/lucide_edit.svg" alt="edit icon" /> Edit
                     </button>
+                    
                     <button onClick={() => viewStats(linkItem)}> <img src="/assets/nimbus_stats.svg" alt="stats icon" /> View stats</button>
+                    
                     <button onClick={() => handleDeleteConfirmation(linkItem)} className="delete-btn"> <img src="/assets/uiw_delete.svg" alt="delete icon" /></button>
                   </div>
+
+                  <div className="link-timestamp">
+                        {formatDate(linkItem.timestamp || Date.now())}
+                     </div>
     
-                    {showDBShareOptions && (
+                    {activeShareLinkId === linkItem.linkId && (
                     <div className="dbshare-options-popup">
                         <div className="dbshare-options-popup-content" >
-                        <span onClick={() => setShowDBShareOptions(false)} className="close"><img src="/assets/close-filled.svg" alt="close icon" /></span>
+                        <span onClick={() => setActiveShareLinkId(null)} className="close"><img src="/assets/close-filled.svg" alt="close icon" /></span>
                         <h4>Share link on social media </h4>
                         <button onClick={() => shareOnSocialMedia('twitter', linkItem.shortLink)}><img src="/assets/Twitter po.svg" alt="twitter-img"/> </button>
                         <button onClick={() => shareOnSocialMedia('facebook', linkItem.shortLink)}><img src="/assets/Facebook po.svg" alt="facebook-img"/> </button>
@@ -285,10 +343,10 @@ const handleDeleteConfirmation = (link: LinkType) => {
                     </div>
                     )}
     
-                    {showDBQRPopup && (
+                    {activeQRLinkId === linkItem.linkId && (
                     <div className="dbqr-popup">
                         <div className="dbqr-popup-content"> 
-                        <span onClick={() => setShowDBQRPopup(false)} className="close"><img src="/assets/close-filled.svg" alt="close icon" /></span>
+                        <span onClick={() => setActiveQRLinkId(null)} className="close"><img src="/assets/close-filled.svg" alt="close icon" /></span>
                         <h4>Download QR Code </h4>
                         <QRCode value={linkItem.shortLink} size={150} level={"H"} includeMargin={true} />
                         <button onClick={() => downloadQRCode('png', 150, linkItem.shortLink)}>Download PNG</button>

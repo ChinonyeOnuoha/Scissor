@@ -1,6 +1,7 @@
 //ErrorBoundary.tsx
 import React, { ErrorInfo } from 'react';
 import { Link } from 'react-router-dom';
+import './errorBoundary.css';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -27,8 +28,9 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   render() {
     if (this.state.hasError) {
       return (
-        <div>
+        <div className='page-not-found container'>
           <h1>Something went wrong</h1>
+          <p>It's not you, it's us. We're having some trouble on our end, but rest assured, our team is working hard to fix it </p>
           <Link to="/">Go to the home page</Link>
         </div>
       );
