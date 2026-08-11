@@ -20,7 +20,7 @@ const HomePage = () => {
       </Helmet>
     <div className="home-container container" >
       <div className="left-container">
-      <h1 className="home-title">Link <span className="home-title-emphasis">shortening </span> made easy <br /> Try it now 😊 </h1>
+      <h1 className="home-title">Link <span className="home-title-emphasis">shortening </span> made easy. Try it now 🚀 </h1>
       <div className="benefits">
         <div className="benefit-item">
           <img src="/assets/mdi_content-cut.svg" alt="Link Icon" className="benefit-icon" />

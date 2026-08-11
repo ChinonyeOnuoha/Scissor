@@ -14,8 +14,8 @@
 }
 
 .link-shortener label {
-  width: 100%;
-  margin-bottom: 8px;
+  width: 95%;
+  /*margin-bottom: 0px;*/
   color: #000; 
   font-size: 1em;
 }
@@ -63,7 +63,7 @@
 .domain-label, .custom-label{
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
   width: 100%;
 }
 
